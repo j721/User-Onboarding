@@ -7,8 +7,8 @@ import axios from 'axios';
 const formSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().email().required("Email is required"),
-    terms: yup.boolean().oneOf([true],"Please agree to terms of use"),
-    positions: yup.string()
+    terms: yup.boolean().oneOf([true],"Please agree to terms of use"),  
+    password: yup.string().required('Please create a password').min(5, "Password must be at least 5 characters long")
 });
 
 function Form () {
@@ -16,17 +16,14 @@ function Form () {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
-        password: '',
-        positions: '',
-
+        password: ''
     });
 
 //state for errors
 const [errors, setErrors]= useState({
     name: '',
     email: '',
-    password: '',
-    positions: '',
+    password: ''
 });
 
 //submit button 
@@ -42,11 +39,11 @@ useEffect(()=>{
 },[formState]);
 
 const validateChange = event =>{
-    yup.reach(formState, event.target.name)
+    yup.reach(formSchema, event.target.name)
     .validate(event.target.value)
     .then(valid=>{
         setErrors({
-            ...errors, [event.target.name]:""
+            ...errors, [event.target.name]: ""
         });
     })
     .catch(err=>{
@@ -56,12 +53,18 @@ const validateChange = event =>{
     });
 }
 
-const formSubmit =event =>{
+const formSubmit = event =>{
     event.preventDefault();
     axios.post(" https://reqres.in/api/users", formState)
     .then(response=>{
         setPost(response.data);
         console.log('received data', post);
+
+        setFormState({
+            name: '',
+            email: '',
+            password: '',
+        });
     })
     .catch(error=>{
         console.log(error.response)
@@ -70,8 +73,8 @@ const formSubmit =event =>{
 
 const inputChange = event =>{
     event.persist();
-    const newFormData ={...formState, [event.target.name]: 
-    event.target.type ==="checkbox" ? event.target.checked: event.target.value
+    const newFormData = {...formState, [event.target.name]: 
+    event.target.type === "checkbox" ? event.target.checked: event.target.value
     };
     validateChange(event);
     setFormState(newFormData);
