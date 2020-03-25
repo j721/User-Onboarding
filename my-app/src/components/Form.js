@@ -98,7 +98,7 @@ return (
            </label>
 
            <label htmlFor ='password'>Password
-                <input id ="password" type="text" name= "password" value ={formState.password} onChange={inputChange}/>
+                <input id ="password" type="password" name= "password" value ={formState.password} onChange={inputChange}/>
                 {errors.password.length > 0 ? <p className="error">{errors.password}</p>:null}
            </label>
 
