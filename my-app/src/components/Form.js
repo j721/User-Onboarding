@@ -2,8 +2,6 @@ import React,{useState, useEffect} from 'react';
 import * as yup from "yup";
 import axios from 'axios';
 
-
-
 const formSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().email().required("Email is required"),
@@ -16,21 +14,26 @@ function Form () {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        terms: ""
     });
 
 //state for errors
 const [errors, setErrors]= useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    terms: ""
 });
+
+
+
+
+//Users state for post requests
+const [users, setUsers] = useState([]);
 
 //submit button 
 const [buttonDisabled, setButtonDisabled] = useState(true);
-
-//state for post requests
-const [post, setPost] = useState([]);
 
 useEffect(()=>{
     formSchema.isValid(formState).then(valid=>{
@@ -40,7 +43,7 @@ useEffect(()=>{
 
 const validateChange = event =>{
     yup.reach(formSchema, event.target.name)
-    .validate(event.target.value)
+    .validate(event.target.name === "terms" ? event.target.checked : event.target.value)
     .then(valid=>{
         setErrors({
             ...errors, [event.target.name]: ""
@@ -57,8 +60,8 @@ const formSubmit = event =>{
     event.preventDefault();
     axios.post(" https://reqres.in/api/users", formState)
     .then(response=>{
-        setPost(response.data);
-        console.log('received data', post);
+        setUsers(response.data);
+        console.log('received data', users);
 
         setFormState({
             name: '',
@@ -123,9 +126,16 @@ return (
                 onChange={inputChange}
                 />
            </label>
-           <pre>{JSON.stringify(post, null, 2)}</pre>
            <button disabled ={buttonDisabled}>Submit</button>
+           <pre>{JSON.stringify(users, null, 2)}</pre>
        </form>
+
+    //     <div >
+    //        {user.map((person,index)=>{
+    //            <div className ="user-info" key ={index}>
+    //            </div>
+    //        })} 
+    //    </div>
  )
 }
 
