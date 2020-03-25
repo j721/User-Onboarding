@@ -6,7 +6,8 @@ const formSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().email().required("Email is required"),
     terms: yup.boolean().oneOf([true],"Please agree to terms of use"),  
-    password: yup.string().required('Please create a password').min(5, "Password must be at least 5 characters long")
+    password: yup.string().required('Please create a password').min(5, "Password must be at least 5 characters long"),
+    roles: yup.string()
 });
 
 function Form () {
@@ -42,7 +43,7 @@ useEffect(()=>{
 
 const validateChange = event =>{
     yup.reach(formSchema, event.target.name)
-    .validate(event.target.name === "terms" ? event.target.checked : event.target.value)
+    .validate(event.target.name)
     .then(valid=>{
         setErrors({
             ...errors, [event.target.name]: ""
