@@ -15,7 +15,8 @@ function Form () {
         name: '',
         email: '',
         password: '',
-        terms: ""
+        terms: "",
+        roles: ""
     });
 
 //state for errors
@@ -23,7 +24,8 @@ const [errors, setErrors]= useState({
     name: '',
     email: '',
     password: '',
-    terms: ""
+    terms: "",
+    roles: ""
 });
 
 //Users state for post requests
@@ -64,7 +66,8 @@ const formSubmit = event =>{
             name: '',
             email: '',
             password: '',
-            terms: ''
+            terms: '',
+            roles: ""
         });
     })
     .catch(error=>{
@@ -100,6 +103,14 @@ return (
 
            <label htmlFor="terms" className="terms"> Terms and Conditions
                 <input type="checkbox" name="terms" checked ={formState.terms} onChange={inputChange}/>
+           </label>
+
+           <label htmlFor ="roles">Roles
+                <select id ="roles" name ="roles" onChange ={inputChange}>
+                    <option value ="web-developer">Web Developer</option>
+                    <option value ="ios-developer">IOS Developer</option>
+                    <option value ="UX Designer">UX Designer</option>
+                </select>
            </label>
 
            <button disabled ={buttonDisabled}>Submit</button>
