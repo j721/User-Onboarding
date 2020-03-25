@@ -26,9 +26,6 @@ const [errors, setErrors]= useState({
     terms: ""
 });
 
-
-
-
 //Users state for post requests
 const [users, setUsers] = useState([]);
 
@@ -67,6 +64,7 @@ const formSubmit = event =>{
             name: '',
             email: '',
             password: '',
+            terms: ''
         });
     })
     .catch(error=>{
@@ -86,56 +84,27 @@ const inputChange = event =>{
 return (
        <form onSubmit ={formSubmit}>
            <label htmlFor ='name'>Name  
-                <input 
-                id ="name"
-                type="text"
-                name= "name"
-                value ={formState.name}
-                onChange={inputChange}
-                />
+                <input id ="name" type="text" name= "name" value ={formState.name} onChange={inputChange}/>
                 {errors.name.length > 0 ? <p className="error">{errors.name}</p>:null}
            </label>
 
            <label htmlFor ='email'>Email  
-                <input 
-                id ="email"
-                type="text"
-                name= "email"
-                value ={formState.email}
-                onChange={inputChange}
-                />
+                <input id ="email" type="text" name= "email" value ={formState.email} onChange={inputChange}/>
                 {errors.email.length > 0 ? <p className="error">{errors.email}</p>:null}
            </label>
 
            <label htmlFor ='password'>Password
-                <input 
-                id ="password"
-                type="text"
-                name= "password"
-                value ={formState.password}
-                onChange={inputChange}
-                />
+                <input id ="password" type="text" name= "password" value ={formState.password} onChange={inputChange}/>
                 {errors.password.length > 0 ? <p className="error">{errors.password}</p>:null}
            </label>
 
            <label htmlFor="terms" className="terms"> Terms and Conditions
-                <input
-                type="checkbox"
-                name="terms"
-                checked ={formState.terms}
-                onChange={inputChange}
-                />
+                <input type="checkbox" name="terms" checked ={formState.terms} onChange={inputChange}/>
            </label>
+
            <button disabled ={buttonDisabled}>Submit</button>
            <pre>{JSON.stringify(users, null, 2)}</pre>
        </form>
-
-    //     <div >
-    //        {user.map((person,index)=>{
-    //            <div className ="user-info" key ={index}>
-    //            </div>
-    //        })} 
-    //    </div>
  )
 }
 
