@@ -22,6 +22,10 @@ it("Add test for inputs and submit form", function(){
         .type('password')
         .should("have.value", "password")
     
+    cy.get("#roles")
+        .select("UX Designer")
+        .should("have.value","UX Designer")
+
     cy.get('[type="checkbox"]')
         .check()
         .should("be.checked");
