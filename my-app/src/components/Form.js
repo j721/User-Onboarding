@@ -13,26 +13,26 @@ const formSchema = yup.object().shape({
 function Form () {
 //managing state for form inputs
     const [formState, setFormState] = useState({
-        name: '',
-        email: '',
-        password: '',
-        terms: "",
-        roles: ""
+        name: " ",
+        email: " ",
+        password: " ",
+        terms: " ",
+        roles: " "
     });
 
 //state for errors
 const [errors, setErrors]= useState({
-    name: '',
-    email: '',
-    password: '',
-    terms: "",
-    roles: ""
+    name: " ",
+    email: " ",
+    password: " ",
+    terms: " ",
+    roles: " "
 });
 
 //Users state for post requests
 const [users, setUsers] = useState([]);
 
-//submit button 
+//submit button state
 const [buttonDisabled, setButtonDisabled] = useState(true);
 
 useEffect(()=>{
@@ -40,21 +40,6 @@ useEffect(()=>{
         setButtonDisabled(!valid);
     });
 },[formState]);
-
-const validateChange = event =>{
-    yup.reach(formSchema, event.target.name)
-    .validate(event.target.name)
-    .then(valid=>{
-        setErrors({
-            ...errors, [event.target.name]: ""
-        });
-    })
-    .catch(err=>{
-        setErrors({
-            ...errors, [event.target.name]: err.errors
-        });
-    });
-}
 
 const formSubmit = event =>{
     event.preventDefault();
@@ -64,17 +49,33 @@ const formSubmit = event =>{
         console.log('received data', users);
 
         setFormState({
-            name: '',
-            email: '',
-            password: '',
-            terms: '',
-            roles: ""
+            name: " ",
+            email: " ",
+            password: " ",
+            terms: " ",
+            roles: " "
         });
     })
     .catch(error=>{
         console.log(error.response)
     });
+};
+
+const validateChange = event =>{
+    yup.reach(formSchema, event.target.name)
+    .validate(event.target.value)
+    .then(valid=>{
+        setErrors({
+            ...errors, [event.target.name]: ""
+        });
+    })
+    .catch(err=>{
+        setErrors({
+            ...errors, [event.target.name]: err.errors[0]
+        });
+    });
 }
+
 
 const inputChange = event =>{
     event.persist();
@@ -83,27 +84,42 @@ const inputChange = event =>{
     };
     validateChange(event);
     setFormState(newFormData);
-}
+};
 
 return (
        <form onSubmit ={formSubmit}>
            <label htmlFor ='name'>Name  
-                <input id ="name" type="text" name= "name" value ={formState.name} onChange={inputChange}/>
+                <input id ="name" 
+                type="text" 
+                name= "name" 
+                value ={formState.name} 
+                onChange={inputChange}/>
                 {errors.name.length > 0 ? <p className="error">{errors.name}</p>:null}
            </label>
 
            <label htmlFor ='email'>Email  
-                <input id ="email" type="text" name= "email" value ={formState.email} onChange={inputChange}/>
+                <input id ="email" 
+                type="text" 
+                name= "email" 
+                value ={formState.email} 
+                onChange={inputChange}/>
                 {errors.email.length > 0 ? <p className="error">{errors.email}</p>:null}
            </label>
 
            <label htmlFor ='password'>Password
-                <input id ="password" type="password" name= "password" value ={formState.password} onChange={inputChange}/>
+                <input id ="password" 
+                type="password" 
+                name= "password" 
+                value ={formState.password} 
+                onChange={inputChange}/>
                 {errors.password.length > 0 ? <p className="error">{errors.password}</p>:null}
            </label>
 
            <label htmlFor="terms" className="terms"> Terms and Conditions
-                <input type="checkbox" name="terms" checked ={formState.terms} onChange={inputChange}/>
+                <input type="checkbox" 
+                name="terms" 
+                checked ={formState.terms} 
+                onChange={inputChange}/>
            </label>
 
            <label htmlFor ="roles">Roles
