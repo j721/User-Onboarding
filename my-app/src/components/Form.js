@@ -13,20 +13,20 @@ const formSchema = yup.object().shape({
 function Form () {
 //managing state for form inputs
     const [formState, setFormState] = useState({
-        name: " ",
-        email: " ",
-        password: " ",
-        terms: " ",
-        roles: " "
+        name: "",
+        email: "",
+        password: "",
+        terms: "",
+        roles: ""
     });
 
 //state for errors
 const [errors, setErrors]= useState({
-    name: " ",
-    email: " ",
-    password: " ",
-    terms: " ",
-    roles: " "
+    name: "",
+    email: "",
+    password: "",
+    terms: "",
+    roles: ""
 });
 
 //Users state for post requests
@@ -49,11 +49,11 @@ const formSubmit = event =>{
         console.log('received data', users);
 
         setFormState({
-            name: " ",
-            email: " ",
-            password: " ",
-            terms: " ",
-            roles: " "
+            name: "",
+            email: "",
+            password: "",
+            terms: "",
+            roles: ""
         });
     })
     .catch(error=>{
@@ -91,9 +91,10 @@ return (
            <label htmlFor ='name'>Name  
                 <input id ="name" 
                 type="text" 
-                name= "name" 
+                name="name" 
                 value ={formState.name} 
-                onChange={inputChange}/>
+                onChange={inputChange}
+                />
                 {errors.name.length > 0 ? <p className="error">{errors.name}</p>:null}
            </label>
 

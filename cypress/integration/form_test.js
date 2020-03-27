@@ -27,5 +27,6 @@ it("Add test for inputs and submit form", function(){
         .should("be.checked");
 
     cy.get("button").click();
-})
+    
+    })
 });
